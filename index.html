@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base target="_top">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<?!= include('semantic.min.css'); ?>
+<?!= include('extras.mixed'); ?>
+</head>
+<body>
+<div class="ui inline message nag">
+  <span class="title">
+  <? if (data) { ?>
+    <?= data.message; ?>
+    <?!= "<script>$(function() {  $('.message.nag').nag('show'); });</script>"; ?>
+  <? } ?>
+  </span> <i class="fa fa-times close icon"></i>
+</div>
+<div class="ui container">
+  <h1 class="ui dividing header">Twitter Archive on Github Pages Setup </h1>
+  <p> This is a web app powered by <a href="https://developers.google.com/apps-script/">Google Apps Script</a> which can keep your downloaded <a href="https://support.twitter.com/articles/20170160">Twitter Archive</a> up-to-date and hosted on <a href="https://pages.github.com/">Github Pages</a>. To set this script up follow the steps outlined below. You can read more about how this application works in this blog post !!ADDLINK!!!. </p>
+</div>
+<div class="ui container">
+  <h2 class="ui dividing header">Setup</h2>
+  <div class="ui grid">
+    <div class="six wide column">
+      <div class="ui fluid vertical steps">
+        <div class="active step"> <i id="twitter" class="fa fa-spinner icon"></i>
+          <div class="content">
+            <div class="title">Twitter</div>
+            <div class="description">Authenticate access to new tweets</div>
+          </div>
+        </div>
+        <div class="step"> <i id="github" class="fa fa-spinner icon"></i>
+          <div class="content">
+            <div class="title">Github</div>
+            <div class="description">Authenticate access to Github</div>
+          </div>
+        </div>
+        <div class="disabled step"> <i id="folder-open" class="fa fa-spinner icon"></i>
+          <div class="content">
+            <div class="title">Github</div>
+            <div class="description">Add Twitter Archive and select repository</div>
+          </div>
+        </div>
+        <div class="disabled step"> <i id="clock-o" class="fa fa-spinner icon"></i>
+          <div class="content">
+            <div class="title">Setup automatic update</div>
+            <div class="description">Schedule archive updates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ten wide column">
+      <div id="step-twitter" class="info">
+        <p>To enable this script to update tweets in your Twitter Archive you need to sign in and grant access.</p>
+        <p><strong>Note:</strong> If you are logged in to multiple Google Accounts this access will be stored with your default account.</p>
+        <p align="center" id="twitter_auth"></p>
+      </div>
+      <div id="step-github" class="info" style="display:none">
+        <p>This script works by updating your Twitter Archive. If you haven't already you need to <a href="https://support.twitter.com/articles/20170160">follow the steps here to 'Request your archive'</a>. Once you have your archive you need to add it to a Github repository. </p>
+        <div class="ui fluid card">
+          <div class="content">
+            <div class="header">Novice Users</div>
+            <div class="description">
+              <p>If you are not familiar with Github the easiest way to setup your initial Twitter archive is <a href="https://pages.github.com/">follow the instructions on the Github Pages site</a>.</p> 
+              <p>To upload your existing archive files you'll find installing a desktop client the easiest way, more information about this is contained on the Github Pages link above. 
+              It is easier to use a 'User or organization site'. The difference between 'User or organization site and a Project site is <a href="https://help.github.com/articles/user-organization-and-project-pages/">explained here</a>.</p>
+            </div>
+          </div>
+        </div>
+        <p>To allow this script to update your archive on Github you need to sign in and allow repository access. If you don't already have a Github account you can <a href="https://github.com/join">sign up for one</a> (accounts are free if you don't mind public repositories). </p>
+        <p><strong>Note:</strong> If you are logged in to multiple Google Accounts this access will be stored with your default account.</p>
+        <p align="center" id="github_auth"></p>
+      </div>
+      <div id="step-folder-open" class="info" style="display:none">
+        <p>Once you've added your archive to Github select it from the list below. If you've but your archive in a sub-directory please include it's path in the field below.</p>
+        <form id="repo_form">
+          <p>
+            <select id="repo" name="repo" class="ui search dropdown selection fluid loading">
+              <option value="">Select a repository</option>
+            </select>
+          </p>
+          <div class="ui labeled input">
+            <div class="ui label">/</div>
+            <input id="sub_dir" name="sub_dir" type="text" placeholder="(Optional) Sub directory path to Twitter Archive...">
+            <div class="ui label">/</div>&nbsp;&nbsp;&nbsp;
+            <div class="ui left pointing label">Optional sub directory</div>
+          </div>
+          <input type="hidden" id="repo_owner" name="repo_owner">
+          <div class="ui divider"></div>
+            <div class="inline field">
+              <div class="ui right pointing label">
+                Check your archive:
+              </div>
+              <a id="repo_url"></a>
+            </div>
+          <div class="ui divider"></div>
+          <p align="center">
+            <button id="folder-open-cancel" class="ui button"> Cancel </button>
+            <button type="submit" id="folder-open-save" class="ui primary button"> Save </button>
+          </p>
+        </form>
+      </div>
+      <div id="step-clock-o" class="info" style="display:none">
+        <p>The final step is to set up how often you'd like your archive to be refreshed. This script shouldn't cause any issues with quotas and for the majority of users a daily trigger will do. You can also test the script is working by clicking the 'Manually update now' button.</p>
+        <p><strong>Note:</strong> the time of daily triggers is set based on the GMT times.</p>
+        <form id="clock_form">
+          <p>
+            <select id="clock" name="clock" class="ui dropdown selection">
+              <option value="">Select how often the script should run</option>
+            </select>
+            <select id="clock_hour" name="clock_hour" class="ui dropdown selection">
+              <option value="">Which hour? (GMT)</option>
+            </select>
+            <button id="clock-run" class="ui button"> Manually update now </button>
+          </p>
+          <p align="right"><small><em>Archive last run: <span id="last_run"></span></em></small></p>
+          <div class="ui divider"></div>
+          <p align="center">
+            <button id="clock-cancel" class="ui button"> Cancel </button>
+            <button type="submit" id="clock-save" class="ui primary button"> Save </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="//use.fontawesome.com/d9bd51c39a.js"></script>
+<?!= include('semantic.min.js'); ?>
+<script>
+    // if coming from a callback provide message and set active step
+    $(function() {
+      <? if (data) { ?>
+        $('#<?= data.service; ?>').parent().trigger('click');
+      <? } ?>
+    });
+  </script>
+</body>
+</html>
