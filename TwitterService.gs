@@ -86,7 +86,7 @@ function twitterFetch_(method, path, params, raw) {
   try {
     var f = twitterService.fetch(url);
     if (f.getResponseCode() === 429){
-      return Browser.msgBox("Twitter rate limit exceeded");
+      throw "Twitter rate limit exceeded";
     }
     return JSON.parse(f.getContentText());
   } catch(e) {

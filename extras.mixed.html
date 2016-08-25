@@ -164,6 +164,7 @@ function showRepoList(data) {
     .find('option')
     .remove()
     .end();
+  list.append(new Option("--Select your repo--", ""));
   for (i in data.items) {
     list.append(new Option(data.items[i].name, data.items[i].name));
   }
@@ -177,6 +178,7 @@ function showRepoList(data) {
     $('#repo_owner').val(data.git_repo.owner);
   }
   list.parent().removeClass('loading');
+  $('#repo').trigger('change');
   $('#step-folder-open button').removeClass('disabled');
 }
 
@@ -211,6 +213,9 @@ function clockHandler(clock, clockName) {
 }
 .container.last{
   padding: 1em 0em;
+}
+.ui.inverted.segment.footer{
+  margin: 12em 0 0;
 }
 .step:hover, #repo_refresh {
   cursor:pointer;

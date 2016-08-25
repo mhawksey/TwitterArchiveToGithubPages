@@ -17,7 +17,7 @@
 </div>
 <div class="ui container">
   <h1 class="ui dividing header">Twitter Archive on Github Pages Setup </h1>
-  <p> This is a web app powered by <a href="https://developers.google.com/apps-script/">Google Apps Script</a> which can keep your downloaded <a href="https://support.twitter.com/articles/20170160">Twitter Archive</a> up-to-date and hosted on <a href="https://pages.github.com/">Github Pages</a>. To set this script up follow the steps outlined below. You can read more about how this application works in this blog post !!ADDLINK!!!. </p>
+  <p> This is a web app powered by <a href="https://developers.google.com/apps-script/">Google Apps Script</a> which can keep your downloaded <a href="https://support.twitter.com/articles/20170160">Twitter Archive</a> up-to-date and hosted on <a href="https://pages.github.com/">Github Pages</a>. To set this script up follow the steps outlined below. You can read more about how this application works in <a href="https://mashe.hawksey.info/2016/08/keeping-your-twitter-archive-fresh-and-freely-hosted-on-github-pages/">this blog post</a>. </p>
 </div>
 <div class="ui container">
   <h2 class="ui dividing header">Setup</h2>
@@ -64,16 +64,16 @@
             <div class="description">
               <p>If you are not familiar with Github the easiest way to setup your initial Twitter archive is <a href="https://pages.github.com/">follow the instructions on the Github Pages site</a>.</p> 
               <p>To upload your existing archive files you'll find installing a desktop client the easiest way, more information about this is contained on the Github Pages link above. 
-              It is easier to use a 'User or organization site'. The difference between 'User or organization site and a Project site is <a href="https://help.github.com/articles/user-organization-and-project-pages/">explained here</a>.</p>
+              It is easier to use a ‘User or organization site’. The difference between ‘User or organization site and a Project site is <a href="https://help.github.com/articles/user-organization-and-project-pages/">explained here</a>.</p>
             </div>
           </div>
         </div>
-        <p>To allow this script to update your archive on Github you need to sign in and allow repository access. If you don't already have a Github account you can <a href="https://github.com/join">sign up for one</a> (accounts are free if you don't mind public repositories). </p>
+        <p>To allow this script to update your archive on Github you need to sign in and allow repository access. If you don’t already have a Github account you can <a href="https://github.com/join">sign up for one</a> (accounts are free if you don’t mind public repositories). </p>
         <p><strong>Note:</strong> If you are logged in to multiple Google Accounts this access will be stored with your default account.</p>
         <p align="center" id="github_auth"></p>
       </div>
       <div id="step-folder-open" class="info" style="display:none">
-        <p>Once you've added your archive to Github select it from the list below. If you've but your archive in a sub-directory please include it's path in the field below.</p>
+        <p>Once you’ve added your archive to Github select it from the list below. If you've put your archive in a sub-directory please include it's path in the field below.</p>
         <form id="repo_form">
           <p>
             <select id="repo" name="repo" class="ui search dropdown selection fluid loading">
@@ -102,7 +102,7 @@
         </form>
       </div>
       <div id="step-clock-o" class="info" style="display:none">
-        <p>The final step is to set up how often you'd like your archive to be refreshed. This script shouldn't cause any issues with quotas and for the majority of users a daily trigger will do. You can also test the script is working by clicking the 'Manually update now' button.</p>
+        <p>The final step is to set up how often you’d like your archive to be refreshed. This script shouldn’t cause any issues with quotas and for the majority of users a daily trigger will do. You can also test the script is working by clicking the ‘Manually update now’ button.</p>
         <p><strong>Note:</strong> the time of daily triggers is set based on the GMT times.</p>
         <form id="clock_form">
           <p>
@@ -125,6 +125,24 @@
     </div>
   </div>
 </div>
+<div class="ui inverted vertical footer segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">Links</h4>
+          <div class="ui inverted link list">
+            <a href="http://mashe.hawksey.info" class="item">Blog</a>
+            <a href="https://github.com/mhawksey/TwitterArchiveToGithubPages" class="item">Source Code</a>
+          </div>
+        </div>
+        
+        <div class="ten wide column">
+          <h4 class="ui inverted header">About</h4>
+          <p>This web app was developed by Martin Hawksey (@mhawksey)</p>
+        </div>
+      </div>
+    </div>
+  </div>
 <script src="//use.fontawesome.com/d9bd51c39a.js"></script>
 <?!= include('semantic.min.js'); ?>
 <script>
