@@ -160,6 +160,7 @@ function showCompletedSteps(steps) {
 }
 
 function showRepoList(data) {
+  console.log(data)
   var list = $('#repo')
     .find('option')
     .remove()
@@ -176,6 +177,7 @@ function showRepoList(data) {
     }, 1);
     $('#sub_dir').val(data.git_repo.sub_dir);
     $('#repo_owner').val(data.git_repo.owner);
+    $('#git_user').text(data.git_repo.owner);
   }
   list.parent().removeClass('loading');
   $('#repo').trigger('change');

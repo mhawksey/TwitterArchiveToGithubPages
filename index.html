@@ -17,9 +17,11 @@
 </div>
 <div class="ui container">
   <h1 class="ui dividing header">Twitter Archive on Github Pages Setup </h1>
-  <p> This is a web app powered by <a href="https://developers.google.com/apps-script/">Google Apps Script</a> which can keep your downloaded <a href="https://support.twitter.com/articles/20170160">Twitter Archive</a> up-to-date and hosted on <a href="https://pages.github.com/">Github Pages</a>. To set this script up follow the steps outlined below. You can read more about how this application works in <a href="https://mashe.hawksey.info/2016/08/keeping-your-twitter-archive-fresh-and-freely-hosted-on-github-pages/">this blog post</a>. </p>
+  <p> This is a web app powered by <a href="https://developers.google.com/apps-script/">Google Apps Script</a> which can keep your downloaded <a href="https://support.twitter.com/articles/20170160">Twitter Archive</a> up-to-date and hosted on <a href="https://pages.github.com/">Github Pages</a>. 
+  To set this script up follow the steps outlined below. You can read more about how this application works in <a href="https://mashe.hawksey.info/2016/08/keeping-your-twitter-archive-fresh-and-freely-hosted-on-github-pages/">this blog post</a>. If you get stuck setting this up here is a short video: </p>
+  <p align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/_TlekXUpiTI" frameborder="0" allowfullscreen></iframe></p>
 </div>
-<div class="ui container">
+<div class="ui container last">
   <h2 class="ui dividing header">Setup</h2>
   <div class="ui grid">
     <div class="six wide column">
@@ -92,7 +94,11 @@
               <div class="ui right pointing label">
                 Check your archive:
               </div>
-              <a id="repo_url"></a>
+              <a id="repo_url" target="_blank"></a>
+              <div class="ui right pointing label">
+                Logged in as:
+              </div>
+              <span id="git_user"></span>
             </div>
           <div class="ui divider"></div>
           <p align="center">

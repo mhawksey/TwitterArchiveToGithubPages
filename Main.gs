@@ -72,7 +72,7 @@ function updateArchive(){
     // filter by the file_name we need
     var git_file = tweet_dir.filter(filterByName.bind(this, file_name));
     // get the data by SHA (contents api method is limited to 1MB which is why getting as a blob                 
-    var tweet_file = Github.Repository.getBlob(git_file[0].sha);
+    var tweet_file = Utilities.newBlob(Utilities.base64Decode(Github.Repository.getBlob(git_file[0].sha).content)).getDataAsString();
     eval(tweet_file);
     
     // get id ofthe last tweet in archive
@@ -186,7 +186,8 @@ function getNewStatusUpdates(sinceid, screen_name){
   var params = {  screen_name: screen_name,
                   count: 200,
                   since_id: sinceid,
-                  include_rts: true };
+                  include_rts: true,
+                  tweet_mode: 'extended' };
   
   // some variables
   var page = 1;
@@ -204,6 +205,12 @@ function getNewStatusUpdates(sinceid, screen_name){
       for (i in data){ // for the data returned we put in montly bins ready for writting/updating files
         if(data[i].id_str != max_id){
           var timestamp = new Date(data[i].created_at);
+          if (data[i]["retweeted_status"]) {
+            data[i] = data[i]["retweeted_status"]
+            Logger.log("Copy RT");
+          } 
+          Logger.log("Setting full_text as text");
+          data[i]["text"] = data[i]["full_text"];
           var bin = "tweets_"+Utilities.formatDate(timestamp, "GMT", "yyyy_MM");
           if (output[bin] == undefined) output[bin] = []; // if bin hasn't been used yet make it
             output[bin].push(data[i]); //push data to date bin

@@ -18,7 +18,7 @@ function getTwitterService_() {
                .setAuthorizationUrl(ser[service_name].serviceProvider.userAuthorizationURL)
                .setConsumerKey(ser[service_name].consumerKey)
                .setConsumerSecret(ser[service_name].consumerSecret)
-               .setProjectKey(ser[service_name].serviceProvider.projectKey)
+               //.setProjectKey(ser[service_name].serviceProvider.projectKey)
                .setCallbackFunction('authCallbackTw')
                .setPropertyStore(ser[service_name].propertyStore);
 }
@@ -31,11 +31,17 @@ function getTwitterService_() {
 function getTwitterAuthURL(){
   var twitterService = getTwitterService_();
   var authorizationUrl = twitterService.authorize();
-  Logger.log(authorizationUrl);
+  // Logger.log(authorizationUrl);
   return '<a href="'+authorizationUrl+'"><button class="ui twitter button"><i class="fa fa-twitter icon"></i>Sign in with Twitter</button></a>'
 }
 
-
+/**
+ * Logs the callback URL to register.
+ */
+function logCallbackUrl() {
+  var service = getTwitterService_();
+  // Logger.log(service.getCallbackUrl());
+}
 
 /**
 * Handles the OAuth callback..

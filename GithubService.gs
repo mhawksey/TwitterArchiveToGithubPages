@@ -50,7 +50,7 @@ function authCallbackGit(e) {
 function getGithubAuthURL() {
     var service = getGithubService_();
     var authorizationUrl = service.getAuthorizationUrl();
-    Logger.log(authorizationUrl);
+    // Logger.log(authorizationUrl);
     return '<a href="'+authorizationUrl+'"><button class="ui github button"><i class="fa fa-github icon"></i>Sign in with GitHub</button></a>'
 }
 
@@ -138,7 +138,7 @@ var Github = (function() {
         } else if (data !== null){
           config.payload = JSON.stringify(data);
         }
-        Logger.log("Github request ... "+url+" config: "+JSON.stringify(config));
+        // Logger.log("Github request ... "+url+" config: "+JSON.stringify(config));
         var response = UrlFetchApp.fetch(url, config)
         if (response.getResponseCode() == 200 || response.getResponseCode() == 201) {
             return JSON.parse(response.getContentText());
@@ -431,19 +431,6 @@ var Github = (function() {
       path = path ? encodeURI(path) : '';
       return _request('GET', Utilities.formatString('/repos/%s/contents/%s', __fullname, path), ref, raw);
     }
-    
-    /**
-     * Get the contents of a repository
-     * @see https://developer.github.com/v3/repos/contents/#get-contents
-     * @param {string} ref - the ref to check
-     * @param {string} path - the path containing the content to fetch
-     * @param {boolean} raw - `true` if the results should be returned raw instead of GitHub's normalized format
-     * @return {Promise} - the promise for the http request
-     */
-    self_.Repository.getContents = function(ref, path, raw) {
-      path = path ? encodeURI(path) : '';
-      return _request('GET', Utilities.formatString('/repos/%s/contents/%s', __fullname, path), ref, raw);
-    }
 
     /**
      * Get the contents of by url
@@ -462,7 +449,7 @@ var Github = (function() {
     * @return {Promise} - the promise for the http request
     */
    self_.Repository.getBlob = function(sha) {
-      return Utilities.newBlob(Utilities.base64Decode(_request('GET', Utilities.formatString('/repos/%s/git/blobs/%s', __fullname, sha)).content)).getDataAsString();
+      return _request('GET', Utilities.formatString('/repos/%s/git/blobs/%s', __fullname, sha));
    }
    
    /**
@@ -474,7 +461,7 @@ var Github = (function() {
    self_.Repository.createBlob = function(content) {
       var postBody = _getContentObject(content);
 
-      Logger.log('sending content', postBody);
+      // Logger.log('sending content', postBody);
       return _request('POST', Utilities.formatString('/repos/%s/git/blobs', __fullname), postBody);
    }
    
@@ -485,28 +472,28 @@ var Github = (function() {
     */
    function _getContentObject(content) {
       if (typeof content === 'string') {
-         Logger.log('contet is a string');
+         // Logger.log('contet is a string');
          return {
             content: content,
             encoding: 'utf-8'
          };
 
       } else if (typeof Buffer !== 'undefined' && content instanceof Buffer) {
-         Logger.log('We appear to be in Node');
+         // Logger.log('We appear to be in Node');
          return {
             content: content.toString('base64'),
             encoding: 'base64'
          };
 
       } else if (typeof Blob !== 'undefined' && content instanceof Blob) {
-         Logger.log('We appear to be in the browser');
+         // Logger.log('We appear to be in the browser');
          return {
             content: Utilities.base64Encode(content),
             encoding: 'base64'
          };
 
       } else { // eslint-disable-line
-         Logger.log(Utilities.formatString('Not sure what this content is: %s, %s'), content, JSON.stringify(content));
+         // Logger.log(Utilities.formatString('Not sure what this content is: %s, %s'), content, JSON.stringify(content));
          throw new Error('Unknown content passed to postBlob. Must be string or Buffer (node) or Blob (web)');
       }
    }
