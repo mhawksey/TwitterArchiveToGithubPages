@@ -206,21 +206,23 @@ function getNewStatusUpdates(sinceid, screen_name){
         if(data[i].id_str != max_id){
           var timestamp = new Date(data[i].created_at);
           if (data[i]["retweeted_status"]) {
-            data[i] = data[i]["retweeted_status"]
-            Logger.log("Copy RT");
+            var existing_id_str = data[i].id_str
+            data[i] = data[i]["retweeted_status"];
+            data[i].id_str = existing_id_str;
           } 
-          Logger.log("Setting full_text as text");
           data[i]["text"] = data[i]["full_text"];
           var bin = "tweets_"+Utilities.formatDate(timestamp, "GMT", "yyyy_MM");
-          if (output[bin] == undefined) output[bin] = []; // if bin hasn't been used yet make it
-            output[bin].push(data[i]); //push data to date bin
+          if (output[bin] == undefined) {
+            output[bin] = []; // if bin hasn't been used yet make it
+          }
+          output[bin].push(data[i]); //push data to date bin
+        }
+        if (data[data.length-1].id_str != max_id) { // more bad code trying to work out if next call with a max_id
+          max_id = data[data.length-1].id_str;
+          params.max_id = max_id;
         }
       }
-      if (data[data.length-1].id_str != max_id) { // more bad code trying to work out if next call with a max_id
-        max_id = data[data.length-1].id_str;
-        //max_id_url = "&max_id="+max_id;
-        params.max_id = max_id;
-      }
+      
     } else { // if not data break the loop
       done = true;
     }
