@@ -204,11 +204,13 @@ function getNewStatusUpdates(sinceid, screen_name){
       }
       for (i in data){ // for the data returned we put in montly bins ready for writting/updating files
         if(data[i].id_str != max_id){
-          var timestamp = new Date(data[i].created_at);
+          var created_at = data[i].created_at;
+          var timestamp = new Date(created_at);
           if (data[i]["retweeted_status"]) {
             var existing_id_str = data[i].id_str
             data[i] = data[i]["retweeted_status"];
             data[i].id_str = existing_id_str;
+            data[i].created_at = created_at;
           } 
           data[i]["text"] = data[i]["full_text"];
           var bin = "tweets_"+Utilities.formatDate(timestamp, "GMT", "yyyy_MM");
